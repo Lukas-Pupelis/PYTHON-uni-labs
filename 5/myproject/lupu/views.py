@@ -10,6 +10,9 @@ from django.http import HttpResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
 
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login as auth_login
+
 @login_required
 def create_invoice(request):
     if request.method == 'POST':
@@ -41,3 +44,14 @@ def generate_pdf(request, invoice_id):
     if pisa_status.err:
         return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
+
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            auth_login(request, user)
+            return redirect('create_invoice')
+    else:
+        form = UserCreationForm()
+    return render(request, 'registration/register.html', {'form': form})
