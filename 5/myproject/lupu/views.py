@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login as auth_login
-from .forms import VATInvoiceForm
-from .models import VATInvoice
+from .forms import VATInvoiceForm, AktasForm
+from .models import VATInvoice, Aktas
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.template.loader import get_template
@@ -33,6 +33,38 @@ def generate_pdf(request, invoice_id):
     context = {'invoice': invoice}
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = f'attachment; filename="invoice_{invoice_id}.pdf"'
+    template = get_template(template_path)
+    html = template.render(context)
+    pisa_status = pisa.CreatePDF(html, dest=response)
+    if pisa_status.err:
+        return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
+
+@login_required
+def create_aktas(request):
+    if request.method == 'POST':
+        form = AktasForm(request.POST)
+        if form.is_valid():
+            aktas = form.save(commit=False)
+            aktas.user = request.user
+            aktas.save()
+            return redirect('aktas_list')
+    else:
+        form = AktasForm()
+    return render(request, 'create_aktas.html', {'form': form})
+
+@login_required
+def aktas_list(request):
+    aktai = Aktas.objects.filter(user=request.user)
+    return render(request, 'aktas_list.html', {'aktai': aktai})
+
+@login_required
+def generate_aktas_pdf(request, aktas_id):
+    aktas = Aktas.objects.get(id=aktas_id)
+    template_path = 'aktas_pdf.html'
+    context = {'aktas': aktas}
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="aktas_{aktas_id}.pdf"'
     template = get_template(template_path)
     html = template.render(context)
     pisa_status = pisa.CreatePDF(html, dest=response)
