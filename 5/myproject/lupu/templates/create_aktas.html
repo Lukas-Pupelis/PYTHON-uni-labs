@@ -10,5 +10,12 @@
         {{ form.as_p }}
         <button type="submit">Save</button>
     </form>
+    <nav>
+        <ul>
+            <li><a href="{% url 'create_invoice' %}">Create Invoice</a></li>
+            <li><a href="{% url 'invoice_list' %}">Invoice List</a></li>
+            <li><a href="{% url 'aktas_list' %}">Aktas List</a></li>
+        </ul>
+    </nav>
 </body>
 </html>

@@ -27,5 +27,12 @@
         </tr>
         {% endfor %}
     </table>
+    <nav>
+        <ul>
+            <li><a href="{% url 'create_invoice' %}">Create Invoice</a></li>
+            <li><a href="{% url 'create_aktas' %}">Create Aktas</a></li>
+            <li><a href="{% url 'aktas_list' %}">Aktas List</a></li>
+        </ul>
+    </nav>
 </body>
 </html>
