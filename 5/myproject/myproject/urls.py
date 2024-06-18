@@ -20,8 +20,7 @@ from django.shortcuts import redirect
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', lambda request: redirect('create_invoice')),  # Redirect root to create_invoice
+    path('', lambda request: redirect('create_invoice')),
     path('lupu/', include('lupu.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
-    #path('', lambda request: redirect('form-list')),  # Redirect the root URL to form list view
 ]

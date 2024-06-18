@@ -34,18 +34,6 @@ def create_invoice(request):
     return render(request, 'create_invoice.html', {'form': form})
 
 @login_required
-def update_invoice(request, pk):
-    invoice = get_object_or_404(VATInvoice, pk=pk)
-    if request.method == 'POST':
-        form = VATInvoiceForm(request.POST, instance=invoice)
-        if form.is_valid():
-            form.save()
-            return redirect('invoice_list')
-    else:
-        form = VATInvoiceForm(instance=invoice)
-    return render(request, 'update_invoice.html', {'form': form})
-
-@login_required
 def invoice_list(request):
     invoices = VATInvoice.objects.filter(user=request.user)
     return render(request, 'invoice_list.html', {'invoices': invoices})
@@ -63,18 +51,6 @@ def create_aktas(request):
         invoice=VATInvoice.objects.filter(user=request.user).first()  # Link to the first VAT invoice
     )
     return redirect('aktas_list')
-
-@login_required
-def update_aktas(request, pk):
-    aktas = get_object_or_404(Aktas, pk=pk)
-    if request.method == 'POST':
-        form = AktasForm(request.POST, instance=aktas)
-        if form.is_valid():
-            form.save()
-            return redirect('aktas_list')
-    else:
-        form = AktasForm(instance=aktas)
-    return render(request, 'update_aktas.html', {'form': form})
 
 @login_required
 def aktas_list(request):
