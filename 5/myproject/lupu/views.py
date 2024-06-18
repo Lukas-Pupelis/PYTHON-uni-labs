@@ -7,6 +7,7 @@ from .models import VATInvoice, Aktas
 from django.http import HttpResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
+from decimal import Decimal
 
 def register(request):
     if request.method == 'POST':
@@ -106,18 +107,37 @@ def aktas_details(request, pk):
 
 from decimal import Decimal
 
-@login_required
+login_required
 def aktas_pdf(request, pk):
     aktas = get_object_or_404(Aktas, pk=pk)
     vat_invoices = VATInvoice.objects.filter(user=request.user)
     
-    vat_rate = Decimal('1.21')
+    vat_rate = Decimal('1.21')  # Convert VAT rate to Decimal
     
     for invoice in vat_invoices:
         invoice.suma_su_pvm = invoice.quantity * invoice.price * vat_rate
 
+    # Example values to replace placeholders in the template
+    data1 = "2024-06-18"
+    yyy = "123"
+    mmmm = "2024"
+    men = "06"
+    dd = "18"
+    nurodoma_vieta = "Sandėlis"
+    sum_value = sum(invoice.suma_su_pvm for invoice in vat_invoices)
+
     template_path = 'aktas_pdf.html'
-    context = {'aktas': aktas, 'vat_invoices': vat_invoices}
+    context = {
+        'aktas': aktas,
+        'vat_invoices': vat_invoices,
+        'data1': data1,
+        'yyy': yyy,
+        'mmmm': mmmm,
+        'men': men,
+        'dd': dd,
+        'nurodoma_vieta': nurodoma_vieta,
+        'sum_value': sum_value,
+    }
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = f'attachment; filename="aktas_{aktas.pk}.pdf"'
     template = get_template(template_path)
