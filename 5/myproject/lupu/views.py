@@ -106,9 +106,9 @@ def aktas_details(request, pk):
 @login_required
 def aktas_pdf(request, pk):
     aktas = get_object_or_404(Aktas, pk=pk)
-    aktai = Aktas.objects.filter(user=request.user)
+    vat_invoices = VATInvoice.objects.filter(user=request.user)
     template_path = 'aktas_pdf.html'
-    context = {'aktai': aktai}
+    context = {'aktas': aktas, 'vat_invoices': vat_invoices}
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = f'attachment; filename="aktas_{aktas.pk}.pdf"'
     template = get_template(template_path)
