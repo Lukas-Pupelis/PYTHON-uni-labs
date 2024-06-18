@@ -42,24 +42,8 @@
                 <td>{{ aktas.unit }}</td>
             </tr>
             <tr>
-                <th>Quantity</th>
-                <td>{{ aktas.quantity }}</td>
-            </tr>
-            <tr>
-                <th>Price</th>
-                <td>{{ aktas.price }}</td>
-            </tr>
-            <tr>
-                <th>Total Price</th>
-                <td>{{ aktas.total_price }}</td>
-            </tr>
-            <tr>
                 <th>Usage</th>
                 <td>{{ aktas.usage }}</td>
-            </tr>
-            <tr>
-                <th>Invoice</th>
-                <td>{{ aktas.invoice.invoice_number }}</td>
             </tr>
         </table>
         <a href="{% url 'aktas_list' %}" class="btn-primary">Back to Aktas List</a>
