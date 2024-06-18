@@ -6,8 +6,7 @@ class VATInvoiceForm(forms.ModelForm):
         model = VATInvoice
         fields = ['invoice_number', 'date', 'customer_name', 'amount', 'quantity']
 
-
 class AktasForm(forms.ModelForm):
     class Meta:
         model = Aktas
-        fields = ['item_name', 'unit', 'quantity', 'price', 'total_price', 'usage']
+        fields = ['item_name', 'unit', 'quantity', 'price', 'total_price', 'usage', 'invoice']

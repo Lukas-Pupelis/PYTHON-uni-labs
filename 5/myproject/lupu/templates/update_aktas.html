@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Create Aktas</title>
+    <title>Update Aktas</title>
     <style>
         .container {
             width: 80%;
@@ -37,7 +37,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Create Aktas Form</h1>
+        <h1>Update Aktas</h1>
         <form method="post">
             {% csrf_token %}
             <table>
@@ -65,7 +65,7 @@
                 </tbody>
             </table>
             <div>{{ form.invoice }}</div>
-            <button type="submit" class="btn-primary">Save</button>
+            <button type="submit" class="btn-primary">Update</button>
         </form>
     </div>
 </body>

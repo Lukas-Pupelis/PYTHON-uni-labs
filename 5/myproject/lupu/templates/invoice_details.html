@@ -1,39 +1,42 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Invoice PDF</title>
+    <title>Invoice Details</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-        }
-        .invoice-box {
-            width: 100%;
-            border: 1px solid #eee;
+        .container {
+            width: 80%;
+            margin: auto;
             padding: 20px;
-            font-size: 16px;
-            line-height: 24px;
-            color: #555;
         }
-        .invoice-box table {
+        table {
             width: 100%;
-            line-height: inherit;
-            text-align: left;
             border-collapse: collapse;
+            margin-bottom: 20px;
         }
-        .invoice-box table th, .invoice-box table td {
-            padding: 8px;
-            border: 1px solid #ddd;
+        table, th, td {
+            border: 1px solid black;
         }
-        .invoice-box table th {
-            background: #f8f8f8;
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-    <div class="invoice-box">
-        <h2>Invoice {{ invoice.invoice_number }}</h2>
+    <div class="container">
+        <h1>Invoice Details</h1>
         <table>
+            <tr>
+                <th>Invoice Number</th>
+                <td>{{ invoice.invoice_number }}</td>
+            </tr>
             <tr>
                 <th>Date</th>
                 <td>{{ invoice.date }}</td>
@@ -55,7 +58,7 @@
                 <td>{{ invoice.price }}</td>
             </tr>
         </table>
+        <a href="{% url 'invoice_list' %}" class="btn-primary">Back to Invoice List</a>
     </div>
-    <a href="{% url 'invoice_list' %}">Back to Invoice List</a>
 </body>
 </html>

@@ -2,36 +2,58 @@
 <html>
 <head>
     <title>Aktas List</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+    </style>
 </head>
 <body>
     <h1>Aktas List</h1>
     <table>
-        <tr>
-            <th>Item Name</th>
-            <th>Unit</th>
-            <th>Quantity</th>
-            <th>Price</th>
-            <th>Total Price</th>
-            <th>Usage</th>
-            <th>Actions</th>
-        </tr>
-        {% for aktas in aktai %}
-        <tr>
-            <td>{{ aktas.item_name }}</td>
-            <td>{{ aktas.unit }}</td>
-            <td>{{ aktas.quantity }}</td>
-            <td>{{ aktas.price }}</td>
-            <td>{{ aktas.total_price }}</td>
-            <td>{{ aktas.usage }}</td>
-            <td><a href="{% url 'generate_aktas_pdf' aktas.id %}">Download PDF</a></td>
-        </tr>
-        {% endfor %}
+        <thead>
+            <tr>
+                <th>Eil. Nr.</th>
+                <th>Materialinės vertybės pavadinimas</th>
+                <th>Mato vnt.</th>
+                <th>Kiekis</th>
+                <th>Kaina</th>
+                <th>Suma su PVM EUR</th>
+                <th>Panaudojimo tikslas ir vieta</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for aktas in aktai %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ aktas.item_name }}</td>
+                <td>{{ aktas.unit }}</td>
+                <td>{{ aktas.quantity }}</td>
+                <td>{{ aktas.price }}</td>
+                <td>{{ aktas.total_price }}</td>
+                <td>{{ aktas.usage }}</td>
+                <td>
+                    <a href="{% url 'aktas_details' aktas.id %}" class="btn-primary">View Details</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
     <nav>
         <ul>
+            <li><a href="{% url 'create_aktas' %}">Create Aktas</a></li>
             <li><a href="{% url 'create_invoice' %}">Create Invoice</a></li>
             <li><a href="{% url 'invoice_list' %}">Invoice List</a></li>
-            <li><a href="{% url 'create_aktas' %}">Create Aktas</a></li>
         </ul>
     </nav>
 </body>

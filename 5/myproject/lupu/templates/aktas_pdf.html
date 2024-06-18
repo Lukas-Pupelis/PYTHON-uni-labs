@@ -2,14 +2,92 @@
 <html>
 <head>
     <title>Aktas PDF</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+        .aktas-box {
+            width: 100%;
+            border: 1px solid #eee;
+            padding: 20px;
+            font-size: 16px;
+            line-height: 24px;
+            color: #555;
+        }
+        .aktas-box table {
+            width: 100%;
+            line-height: inherit;
+            text-align: left;
+            border-collapse: collapse;
+        }
+        .aktas-box table th, .aktas-box table td {
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+        .aktas-box table th {
+            background: #f8f8f8;
+        }
+    </style>
 </head>
 <body>
-    <h1>Aktas Form</h1>
-    <p>Item Name: {{ aktas.item_name }}</p>
-    <p>Unit: {{ aktas.unit }}</p>
-    <p>Quantity: {{ aktas.quantity }}</p>
-    <p>Price: {{ aktas.price }}</p>
-    <p>Total Price: {{ aktas.total_price }}</p>
-    <p>Usage: {{ aktas.usage }}</p>
+    <div class="aktas-box">
+        <p style="text-align: right;">
+            Patvirtinta [ĮSTAIGOS] direktoriaus<br>
+            [DATA1] įsakymu Nr. [YYY]
+        </p>
+        <p style="text-align: right;">
+            TVIRTINU:<br>
+            [ĮSTAIGOS] direktorius<br>
+            [MMMM] m. [MEN] mėn. [DD] d
+        </p>
+        <h2 style="text-align: center;">[ĮSTAIGA]</h2>
+        <h3 style="text-align: center;">MATERIALINIŲ VERTYBIŲ NURAŠYMO AKTAS</h3>
+        <p>
+            Komisija patvirtinta [DATA1] (pvz. 2012 m. rugpjūčio 1 d.) įsakymu Nr. [YYY] ,,Dėl
+            komisijos sudarymo materialinių vertybių nurašymui”, komisijos pirmininkas [KOMISIJOS NARYS] –
+            [PAREIGOS], [KOMISIJOS NARYS [1-N]] – [PAREIGOS [1-N]] nustatė, kad per [MMMM] m.
+            [MEN] mėn. [NURODOMA VIETA] sunaudojo:
+        </p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Eil. Nr.</th>
+                    <th>Materialinės vertybės pavadinimas</th>
+                    <th>Mato vnt.</th>
+                    <th>Kiekis</th>
+                    <th>Kaina</th>
+                    <th>Suma su PVM EUR</th>
+                    <th>Panaudojimo tikslas ir vieta</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for aktas in aktai %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ aktas.item_name }}</td>
+                    <td>{{ aktas.unit }}</td>
+                    <td>{{ aktas.quantity }}</td>
+                    <td>{{ aktas.price }}</td>
+                    <td>{{ aktas.total_price }}</td>
+                    <td>{{ aktas.usage }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <p>Iš viso: [SUM]</p>
+        <p>
+            Pagal pirkimo dokumentus:<br>
+            [PARDAVĖJAS] PVM s.f. [SERIJA] Nr. [NUMERIS], [DATA];<br>
+            (pvz.: UAB "Kėdė" PVM s.f SS Nr. 03230109, 2016 11 10; yra keletas pirkimo dokumentų)
+        </p>
+        <p>
+            Komisijos pirmininkas _____________________ [KOMISIJOS NARYS 1]<br>
+            Nariai _____________________ [KOMISIJOS NARYS 2]<br>
+            _____________________ [KOMISIJOS NARYS 3]<br>
+            _____________________ [KOMISIJOS NARYS 4]
+        </p>
+        <p>Mat. atsakingas _____________________ [ATSAKINGAS DARBUOTOJAS]</p>
+    </div>
 </body>
 </html>
