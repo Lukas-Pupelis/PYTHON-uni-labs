@@ -51,16 +51,17 @@ def invoice_list(request):
 
 @login_required
 def create_aktas(request):
-    if request.method == 'POST':
-        form = AktasForm(request.POST)
-        if form.is_valid():
-            aktas = form.save(commit=False)
-            aktas.user = request.user
-            aktas.save()
-            return redirect('aktas_list')
-    else:
-        form = AktasForm()
-    return render(request, 'create_aktas.html', {'form': form})
+    aktas = Aktas.objects.create(
+        user=request.user,
+        item_name="Default Item",  # Set a default item name
+        unit="vnt",  # Set a default unit
+        quantity=1,  # Set a default quantity
+        price=0,  # Set a default price
+        total_price=0,  # Set a default total price
+        usage="Default Usage",  # Set a default usage
+        invoice=VATInvoice.objects.filter(user=request.user).first()  # Link to the first VAT invoice
+    )
+    return redirect('aktas_list')
 
 @login_required
 def update_aktas(request, pk):
