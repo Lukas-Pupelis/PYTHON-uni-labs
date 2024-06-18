@@ -104,10 +104,18 @@ def aktas_details(request, pk):
     aktas = get_object_or_404(Aktas, pk=pk)
     return render(request, 'aktas_details.html', {'aktas': aktas})
 
+from decimal import Decimal
+
 @login_required
 def aktas_pdf(request, pk):
     aktas = get_object_or_404(Aktas, pk=pk)
     vat_invoices = VATInvoice.objects.filter(user=request.user)
+    
+    vat_rate = Decimal('1.21')
+    
+    for invoice in vat_invoices:
+        invoice.suma_su_pvm = invoice.quantity * invoice.price * vat_rate
+
     template_path = 'aktas_pdf.html'
     context = {'aktas': aktas, 'vat_invoices': vat_invoices}
     response = HttpResponse(content_type='application/pdf')

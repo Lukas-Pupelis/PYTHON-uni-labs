@@ -68,8 +68,8 @@
                     <td>{{ invoice.invoice_number }}</td>
                     <td>{{ invoice.date }}</td>
                     <td>{{ invoice.quantity }}</td>
-                    <td>{{ invoice.amount }}</td>
                     <td>{{ invoice.price }}</td>
+                    <td>{{ invoice.suma_su_pvm|floatformat:2 }}</td>
                     <td>{{ invoice.customer_name }}</td>
                 </tr>
                 {% endfor %}
